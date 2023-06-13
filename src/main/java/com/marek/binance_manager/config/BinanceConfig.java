@@ -1,9 +1,14 @@
 package com.marek.binance_manager.config;
 
+import com.binance.connector.client.WebSocketApiClient;
+import com.binance.connector.client.WebSocketStreamClient;
 import com.binance.connector.client.impl.SpotClientImpl;
+import com.binance.connector.client.impl.WebSocketApiClientImpl;
+import com.binance.connector.client.impl.WebSocketStreamClientImpl;
 import com.binance.connector.futures.client.impl.CMFuturesClientImpl;
 import com.binance.connector.futures.client.impl.FuturesClientImpl;
 import com.binance.connector.futures.client.impl.UMFuturesClientImpl;
+import com.binance.connector.futures.client.impl.UMWebsocketClientImpl;
 import com.binance.connector.futures.client.utils.ProxyAuth;
 import okhttp3.Authenticator;
 import okhttp3.Credentials;
@@ -19,13 +24,13 @@ public class BinanceConfig {
     @Value("${binance.testnet.futuresApikey}")
     private String futuresApiKey;
 
-    @Value("${binance.testnet.FuturesSeckey}")
+    @Value("${binance.testnet.futuresSeckey}")
     private String futuresSecretKey;
 
-    @Value("${binance.testnet.spotApikey}")
+    @Value("${binance.testnet.spotApiKey}")
     private String spotApiKey;
 
-    @Value("${binance.testnet.spotSeckey}")
+    @Value("${binance.testnet.spotSecKey}")
     private String spotSecretKey;
 
     @Value("${binance.testnet.futuresUrl}")
