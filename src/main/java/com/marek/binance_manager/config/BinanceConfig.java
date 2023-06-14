@@ -1,14 +1,9 @@
 package com.marek.binance_manager.config;
 
-import com.binance.connector.client.WebSocketApiClient;
-import com.binance.connector.client.WebSocketStreamClient;
 import com.binance.connector.client.impl.SpotClientImpl;
-import com.binance.connector.client.impl.WebSocketApiClientImpl;
-import com.binance.connector.client.impl.WebSocketStreamClientImpl;
 import com.binance.connector.futures.client.impl.CMFuturesClientImpl;
 import com.binance.connector.futures.client.impl.FuturesClientImpl;
 import com.binance.connector.futures.client.impl.UMFuturesClientImpl;
-import com.binance.connector.futures.client.impl.UMWebsocketClientImpl;
 import com.binance.connector.futures.client.utils.ProxyAuth;
 import okhttp3.Authenticator;
 import okhttp3.Credentials;
@@ -18,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+
 @Configuration
 public class BinanceConfig {
 
@@ -83,7 +79,7 @@ public class BinanceConfig {
         if (isProxyEnabled) {
             Proxy proxyConn = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyIp, proxyPort));
             Authenticator auth = null;
-            if (!proxyUser.isBlank()){
+            if (!proxyUser.isBlank()) {
                 auth = (route, response) -> {
                     if (response.request().header("Proxy-Authorization") != null) {
                         return null;
@@ -96,20 +92,21 @@ public class BinanceConfig {
             client.setProxy(proxy);
         }
     }
+
     private void setProxy(SpotClientImpl client) {
         if (isProxyEnabled) {
             Proxy proxyConn = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyIp, proxyPort));
             Authenticator auth = null;
-            if(!proxyUser.isBlank()){
+            if (!proxyUser.isBlank()) {
                 auth = (route, response) -> {
                     if (response.request().header("Proxy-Authorization") != null) {
-                        return null; // already failed to authenticate.
+                        return null;
                     }
                     String credential = Credentials.basic(proxyUser, proxyPassword);
                     return response.request().newBuilder().header("Proxy-Authorization", credential).build();
                 };
             }
-            com.binance.connector.client.utils.ProxyAuth  proxy = new com.binance.connector.client.utils.ProxyAuth (proxyConn, auth);
+            com.binance.connector.client.utils.ProxyAuth proxy = new com.binance.connector.client.utils.ProxyAuth(proxyConn, auth);
             client.setProxy(proxy);
         }
     }

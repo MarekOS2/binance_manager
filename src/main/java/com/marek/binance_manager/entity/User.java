@@ -1,7 +1,6 @@
-package com.marek.binance_manager.entities;
+package com.marek.binance_manager.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 
 @Entity
