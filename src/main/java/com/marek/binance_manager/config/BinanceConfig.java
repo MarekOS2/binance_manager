@@ -78,16 +78,7 @@ public class BinanceConfig {
     private void setProxy(FuturesClientImpl client) {
         if (isProxyEnabled) {
             Proxy proxyConn = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyIp, proxyPort));
-            Authenticator auth = null;
-            if (!proxyUser.isBlank()) {
-                auth = (route, response) -> {
-                    if (response.request().header("Proxy-Authorization") != null) {
-                        return null;
-                    }
-                    String credential = Credentials.basic(proxyUser, proxyPassword);
-                    return response.request().newBuilder().header("Proxy-Authorization", credential).build();
-                };
-            }
+            Authenticator auth = authenticate();
             ProxyAuth proxy = new ProxyAuth(proxyConn, auth);
             client.setProxy(proxy);
         }
@@ -96,21 +87,24 @@ public class BinanceConfig {
     private void setProxy(SpotClientImpl client) {
         if (isProxyEnabled) {
             Proxy proxyConn = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyIp, proxyPort));
-            Authenticator auth = null;
-            if (!proxyUser.isBlank()) {
-                auth = (route, response) -> {
-                    if (response.request().header("Proxy-Authorization") != null) {
-                        return null;
-                    }
-                    String credential = Credentials.basic(proxyUser, proxyPassword);
-                    return response.request().newBuilder().header("Proxy-Authorization", credential).build();
-                };
-            }
+            Authenticator auth = authenticate();
             com.binance.connector.client.utils.ProxyAuth proxy = new com.binance.connector.client.utils.ProxyAuth(proxyConn, auth);
             client.setProxy(proxy);
         }
     }
 
-
+    private Authenticator authenticate() {
+        Authenticator auth = null;
+        if (!proxyUser.isBlank()) {
+            auth = (route, response) -> {
+                if (response.request().header("Proxy-Authorization") != null) {
+                    return null;
+                }
+                String credential = Credentials.basic(proxyUser, proxyPassword);
+                return response.request().newBuilder().header("Proxy-Authorization", credential).build();
+            };
+        }
+        return auth;
+    }
 }
 
