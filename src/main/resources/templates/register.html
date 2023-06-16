@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <title>Registration</title>
+</head>
+<body>
+<h1>Registration</h1>
+<div th:if="${param.error}">
+    Error: ${param.error}
+</div>
+<form th:action="@{/register}" method="post">
+    <div>
+        <label>
+            <input type="text" name="username" placeholder="Username" required />
+        </label>
+    </div>
+    <div>
+        <label>
+            <input type="password" name="password" placeholder="Password" required />
+        </label>
+    </div>
+    <input type="submit" value="Register" />
+</form>
+</body>
+</html>

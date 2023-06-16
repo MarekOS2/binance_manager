@@ -1,4 +1,4 @@
-package com.marek.binance_manager.controller;
+package com.marek.binance_manager.controller.api;
 
 import com.marek.binance_manager.dto.LoginDto;
 import com.marek.binance_manager.dto.RegisterDto;

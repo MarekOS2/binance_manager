@@ -28,6 +28,7 @@ public class UserAuthService {
     public ResponseEntity<String> register(RegisterDto registerDto) {
         User user = new User();
         user.setUsername(registerDto.username());
+        user.setEmail(registerDto.email());
         user.setPassword(registerDto.password());
 
         Authority authorities = authorityRepository.getAuthorityByName("USER").get();

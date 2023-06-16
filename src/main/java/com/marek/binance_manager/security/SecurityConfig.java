@@ -20,10 +20,12 @@ public class SecurityConfig {
         httpSecurity
                 .csrf((csrf) -> csrf
                         .disable())
-//                .formLogin(formLogin -> formLogin
-//                        .)
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login"))
+
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/login.html").permitAll()
+                        .requestMatchers("/login", "/register, /css/**, /js/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated());
         return httpSecurity.build();
