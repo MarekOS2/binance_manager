@@ -24,6 +24,7 @@ public class SecurityConfig {
 //                        .)
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/login.html").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated());
         return httpSecurity.build();
     }

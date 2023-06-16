@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class SecurityUser implements UserDetails {
@@ -13,17 +14,17 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return user.getUsername();
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return user.getPassword();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return user.getAuthorities().stream().map(SecurityAuthority::new).collect(Collectors.toList());
     }
 
     @Override
